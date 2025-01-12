@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>One in the Dark Game by Bryan Gentry</title>
+    <style>
+
+        
+        #settings p {
+            font-size:30px;
+            font-weight:bold;
+            text-align:center;
+        }
+
+        #minusPlayers {
+            display:inline-block;
+            background-color:red;
+            color:white;
+            width:50px;
+            height:50px;
+            border-radius:10px;
+            vertical-align:middle;
+        }
+
+        #addPlayers {
+            display:inline-block;
+            background-color:blue;
+            color:white;
+            width:50px;
+            height:50px;
+            border-radius:10px;
+                        vertical-align:middle;
+        }
+
+        #numPlayers {
+            display:inline-block;
+            background-color:white;
+            border:1px solid #eeeeee;
+            color:black;
+            width:70px;
+            height:50px;
+            border-radius:10px;
+            font-size:30px;
+        }
+
+
+        
+        .wordBox {
+            width:80%;
+            height:200px;
+            position:absolute;
+            left:50%;
+            top:100px;
+            -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+            border-radius:10px;
+        }
+
+        #wordDisplay {
+            background-color:white;
+            border:3px solid black;
+            z-index:1;
+            vertical-align:middle;
+        }
+
+        #wordCover {
+            background-color:blue;
+            border:3px solid black;
+            z-index:2;
+            transition:height 2s;
+        }
+
+        .wordBoxShrink {
+            height:0px;
+        }
+
+        #word {
+            font-size:40px;
+            font-weight:bold;
+            top:50%;
+            left:50%;
+            margin:0px;
+            position:absolute;
+            -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+        }
+
+        #advance {
+            width:300px;
+            height:100px;
+            position:absolute;
+            left:50%;
+            top:350px;
+            -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+            background-color:#00aa00;
+            border-radius:10px;
+        }
+
+         #advMessage {
+            font-size:40px;
+            font-weight:bold;
+            top:50%;
+            left:50%;
+             margin:0px;
+             color:white;
+             font-weight:bold;
+            position:absolute;
+            -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+        }
+
+        #advInstructions {
+            position:relative;
+            top:100px;
+        }
+
+
+/* The Modal (background) */
+.modal {
+ 
+  position: fixed; /* Stay in place */
+  z-index: 5; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+             animation-fill-mode: forwards ;
+
+}
+
+/* Modal Content */
+.modal-content {
+  position: relative;
+  background-color: #fefefe;
+  margin: auto;
+  padding: 0;
+  border: 1px solid #888;
+  width: 80%;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+  -webkit-animation-name: animatein;
+  -webkit-animation-duration: 0.4s;
+  animation-name: animatein;
+  animation-duration: 0.4s;
+    overflow:scroll;
+    max-height:80%;
+    
+
+}
+        .modal-content img {
+            max-width:80%;
+        }
+
+.modal-closed {
+  -webkit-animation-name: animateout;
+  -webkit-animation-duration: 0.4s;
+  animation-name: animateout;
+  animation-duration: 0.4s
+}
+
+/* Add Animation */
+@-webkit-keyframes animatetop {
+  from {top:-300px; opacity:0} 
+  to {top:0; opacity:1}
+}
+
+@keyframes animatein {
+  from {top:-300px; opacity:0}
+  to {top:0; opacity:1}
+}
+
+@keyframes animateout {
+  from {top:0; opacity:1; display:block;}
+  to {top:-300px; opacity:0; display:none;}
+}
+
+/* The Close Button */
+.close {
+  color: white;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal-header {
+  padding: 2px 16px;
+  background-color: #5cb85c;
+  color: white;
+}
+
+.modal-body {padding: 2px 16px;}
+
+.modal-footer {
+  padding: 2px 16px;
+  background-color: #5cb85c;
+  color: white;
+}
+
+.button {
+    display:table-cell;
+    background-color:#5cb85c;
+    width:150px;
+    height:100px;
+    border-radius:10px;
+    font-size:20px;
+    color:white;
+    text-align:center;
+    vertical-align:middle;
+    font-weight:bold;
+    margin:10px;
+}
+
+.revealButton {
+    width:140px;
+    height:90px;
+    border-right:10px solid #187418;
+    border-bottom:10px solid #187418;
+}
+
+        .revealPressed {
+            /*width:149px;
+    height:99px;*/
+            margin-left:19px;
+            border-right: 1px;
+            border-bottom:1px;
+            background-color:#5cb85c;
+        }
+
+        
+    #revealPlayer {
+        font-size:20px;
+        font-weight:bold;
+    }
+        
+    </style>
+  </head>
+  <body>
+
+    <div id="settings">
+        <p>Players: 
+            <span id="minusPlayers" onclick="updateNumPlayers(-1)">—</span> 
+            <span id="numPlayers"></span> 
+            <span id="addPlayers" onclick="updateNumPlayers(1)">+</span>
+        </p>
+    </div>
+
+    <div id="wordDisplay" class="wordBox">
+        <p id="word">TEST</p>
+    </div>
+
+    <div id="wordCover" class="wordBox">
+
+    </div>
+
+    <div id="advance">
+        <p id="advMessage">NEXT</p>
+        <p id="advInstructions">&#128070 Press the button to reveal your word, then pass to the next player. </p>
+    </div>
+      
+
+      <div id="howToPlay" class="modal modal-closed">
+          <div class="modal-content">
+              <div class="modal-header">
+                        <span class="close">&times;</span>
+
+          <h1>Welcome to One in the Dark</h1>
+                  </div>
+                  <div class="modal-body">
+
+          <h2>How to play</h2>
+          <p><strong>One in the Dark</strong> gives each player the same prompt word to draw or act out...except one player who is left in the dark!</p>
+            <p>
+            To start, set your number of players, then pass your device to each player, letting them see their prompt word. Whoever gets the 'X' is left in the dark...but they must keep it a secret.
+        </p>
+        <p>Then the players take turn drawing a picture based on the prompt, one line per player per turn. The player in the dark must try to blend in!
+          </p>
+        <button class="button" onclick="play()">Start</button>
+                      </div>
+                
+              </div>
+      </div>
+
+
+
+
+
+      <div id="nowYouPlay" class="modal modal-closed">
+          <div class="modal-content">
+              <div class="modal-header">
+                        <span class="close">&times;</span>
+
+          <h1>Now it's time to play.</h1>
+                  </div>
+                  <div class="modal-body">
+
+          <h2>What's next?</h2>
+          <p>Now take turns drawing one line at a time to illustrate the prompt word. Or, act out a scene related to the prompt word. The person left in the dark must try to blend in, while everyone else tries to guess who is in the dark.</p>
+          <p>Hold the button below to reveal who is in the dark.</p>
+
+        <p id="revealPlayer">.</p>
+
+                      
+        <button id="revealOne" class="revealButton button" ontouchstart="reveal(this)" ontouchend="stopReveal(this)">REVEAL</button>              
+           <p>You also can start the next round.</p>
+        <button class="button" onclick="play()">Play again</button>
+                      </div>
+                
+              </div>
+      </div>
+      
+    <script>
+
+
+    var numPlayers = 4;
+    var inTheDark;
+    var revealText = ['.','. .','. . .','. . . .','Player'];
+    var revealTimer;
+    var revealStepper = 0;
+    var guessWord;
+    var players = ['test'];
+    var currentPlayer = 0;
+    var word;
+    var wordCover = document.getElementById('wordCover');
+        
+var wordList="Brushing teeth,Building a sandcastle,Dancing,Driving a car,Opening a gift,Shoveling snow,Swimming,Skateboarding,Tying a shoe,Walking a dog,Yoga,Talking on the phone,Running,Mowing the lawn,Playing piano,Hiking in the mountains,Climbing a tree,Baking cookies,Reading a book,Tying shoes,Riding zip line,Riding merry go round,folding,clothes,frisbee,Shirt,Skirt,Bumblebee,Bird,Cat,Cow,Dog,Fish,Giraffe,Horse,Monkey,Rabbit,Spider,Lion,Elephant,Tornado,Hurricane,Space Ship,Race Car,Van,Shoes,Flip Flops,Dinosaur,Alligator,Donut,Snake,Banana,Bubblegum,French fries,Ice cream cone,Jello,Pizza,Popcorn,Sandwich,Spaghetti,Taco,Avocado,Apple,broccoli,Salad,Burrito,soup,Bow and arrows,Baseball,Basketball,Football,Golf,Skiing,Soccer,Tennis Ball,Spider,Monkey,Panda,Penguin,Guitar,Trampoline,Lawnmower,Lemonade,Rose,Carrot,Violin,Cup,Turkey,Spoon,Fork,Knife,House,Skyscraper,Flying Saucer,Hot Dog,Camera,Telephone,Sushi,Haircut,Sword,Pack of toothpicks,Box of Matches,Campfire,Smores,Bush,Table,Couch,Chair,Broom,Oatmeal,Peanut Butter,Karate,Stairs,Whale,Dolphin,Hand Soap,Toes,Fingernail Clippers,Orange Juice,Pancakes,Salt and Pepper,Bubbles,Washing Machine,Refrigerator,Eggs,Chickens,Library,Knitting needles,Pumpkin,Watermelon,Hippo,Television,Playground".split(',');
+
+
+//choose a random word from the list.
+var randomWord = function() {
+    randomNum = Math.floor( Math.random() * wordList.length );
+    newWord = wordList[randomNum];
+    wordList.splice(randomNum,1); //remove it from the list so the same word does not come up more than once per game.
+    return newWord;
+    
+}
+
+
+    var updateNumPlayers = function( n ) {
+        numPlayers += n;
+        startNewRound();
+    }
+    
+
+//add touch and click events to the advance button.
+    document.getElementById('advance').ontouchstart = function(e) {
+            e.preventDefault();
+            wordCover.removeEventListener('transitionend', advanceToNextPlayer);
+            if ( currentPlayer < players.length ) {
+                wordCover.classList.add('wordBoxShrink');
+            } else {
+                startNewRound();
+            }
+            
+        }
+
+    document.getElementById('advance').ontouchend = function() {
+                wordCover.classList.remove( 'wordBoxShrink' );
+                wordCover.addEventListener('transitionend', advanceToNextPlayer
+                )
+            }
+
+            document.getElementById('advance').onclick = function() {
+            if ( currentPlayer < players.length ) {
+            
+            document.getElementById('wordCover').classList.add('wordBoxShrink');
+
+            setTimeout( function() {
+                document.getElementById( 'wordCover' ).classList.remove( 'wordBoxShrink' );
+                currentPlayer++;
+                setTimeout( function() {
+                    updateText()
+                        }, 2000);
+            }, 4000 );
+
+            } else {
+                startNewRound();
+            }
+            
+        }
+        
+//advance to the next player, but only if the cover is at its full height.
+    var advanceToNextPlayer = function() {
+        if ( wordCover.offsetHeight > 200 ) {
+                    currentPlayer++;
+                      updateText();
+                      }
+    }
+    
+
+//set up the players based on the current numbers of players
+    var setUpPlayers = function() {
+        players = [];
+        //set up the players variable
+        for (i=0; i<numPlayers; i ++) {
+            players.push(word);
+        }
+        //make a random player's word "X". This player is 'left in the dark' because they will not know the prompt word.
+        randomPlayer = Math.floor(Math.random()*numPlayers);
+        players[randomPlayer] = "X";
+        updateText();
+        revealText[ revealText.length-1 ] = "Player " + (randomPlayer + 1).toString() + " was in the dark!";
+    }
+
+//update the text.
+    var updateText = function() {
+        document.getElementById( 'numPlayers' ).textContent = numPlayers;
+        if ( currentPlayer < players.length ) {
+        document.getElementById( 'advMessage' ).textContent = "Player " + (currentPlayer + 1).toString();
+        document.getElementById( 'word' ).textContent = players[currentPlayer];
+        } else {
+            
+        document.getElementById( 'advMessage' ).textContent = "NEXT ROUND";
+
+        document.getElementById( 'nowYouPlay').classList.remove('modal-closed');
+        }  
+    }
+
+
+        
+    var startNewRound = function() {
+        word = randomWord();
+        setUpPlayers();
+        currentPlayer=0;
+        document.getElementById( 'revealPlayer' ).innerText = ".";
+        updateText();
+        }
+
+
+        //the modal close functions
+        var play= function() {
+            document.getElementById( 'howToPlay' ).classList.add('modal-closed');
+            document.getElementById( 'nowYouPlay' ).classList.add('modal-closed');
+        startNewRound();
+            
+        }
+        
+
+        for (cl = 0; cl < document.getElementsByClassName('close').length; cl++) {
+            document.getElementsByClassName('close')[cl].onclick = function() {
+            play();
+        }
+                                                                                  }
+        
+startNewRound();
+
+
+window.onload = function() {
+    document.getElementById('howToPlay').classList.remove('modal-closed');
+}
+
+document.getElementById('revealOne').ontouchstart = function() {
+        console.log('hi');
+    reveal(this);
+    
+}
+
+var reveal = function(e) {
+    e.classList.add('revealPressed');
+    if ( document.getElementsByClassName('revealPressed').length == document.getElementsByClassName('revealButton' ).length) {
+        stepReveal();
+    revealTimer = setInterval( function() {
+        stepReveal();
+        
+    }, 600);
+        }
+}
+
+var stepReveal = function() {
+            if ( revealStepper < revealText.length ) {
+        document.getElementById( 'revealPlayer' ).innerText = revealText[revealStepper];
+        revealStepper++;
+        }
+        else {
+            clearInterval (revealTimer);
+        }
+}
+
+    var stopReveal = function( e ) {
+        e.classList.remove('revealPressed');
+        revealStepper = 0;
+        clearInterval( revealTimer );
+
+}
+    </script>
+  </body>
+</html>
